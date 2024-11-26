@@ -55,9 +55,10 @@
 
         <!-- Submit Buttons -->
         <div class="mt-10 flex gap-8">
-            <button type="submit" class="w-full md:w-auto bg-blue-500 hover:bg-blue-600 text-white py-4 px-8 rounded-lg shadow-xl transition ease-in-out duration-300">
-                Get Quote
-            </button>
+        <button type="submit" class="w-full md:w-auto bg-green-500 hover:bg-green-600 text-white py-4 px-8 rounded-lg shadow-xl transition ease-in-out duration-300">
+            Get Quote
+        </button>
+
             <button type="reset" class="w-full md:w-auto bg-gray-500 hover:bg-gray-600 text-white py-4 px-8 rounded-lg shadow-xl transition ease-in-out duration-300">
                 Reset Form
             </button>
