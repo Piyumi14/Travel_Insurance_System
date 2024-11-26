@@ -14,8 +14,7 @@ It supports key features like quote calculations, form validation, and storage o
 4. [Usage](#usage)
 5. [Folder Structure](#folder-structure)
 6. [Tests](#tests)
-7. [Contributing](#contributing)
-8. [License](#license)
+7. [Author](#author)
 
 ---
 
@@ -64,16 +63,16 @@ Follow these steps to set up the project locally:
     npm install
 
 4. Configure environment variables:
-    Copy .env.example to .env:
-    cp .env.example .env
+    - Copy .env.example to .env:
+    - cp .env.example .env
 
-    Update the .env file with your database credentials:
-    DB_CONNECTION=mysql
-    DB_HOST=127.0.0.1
-    DB_PORT=3306
-    DB_DATABASE=travel_insurance
-    DB_USERNAME=root
-    DB_PASSWORD=yourpassword
+    - Update the .env file with your database credentials:
+    - DB_CONNECTION=mysql
+    - DB_HOST=127.0.0.1
+    - DB_PORT=3306
+    - DB_DATABASE=travel_insurance
+    - DB_USERNAME=root
+    - DB_PASSWORD=yourpassword
 
 5. Run migrations to set up the database:
     php artisan migrate
@@ -100,7 +99,7 @@ Follow these steps to set up the project locally:
 
 ### Tests
 - Running Tests
-    php artisan test
+    - php artisan test
 
 ### Author
 - Piyumi Dayarathna
