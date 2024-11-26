@@ -2,10 +2,13 @@
 
 @section('content')
 <head>
-<link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 
-    <h1 class="text-4xl font-bold text-center mb-10 text-black">Travel Insurance Quote</h1>
+<!-- Add the correct background image properties to prevent tiling -->
+<body class="bg-gray-100 bg-cover bg-no-repeat bg-center min-h-screen" style="background-image: url('{{ asset('images/image1.jpg') }}')">
+
+    <h1 class="text-4xl font-bold text-center mb-10 text-white">Travel Insurance Quote</h1>
 
     <form action="{{ route('quote.store') }}" method="POST" class="max-w-3xl mx-auto bg-white p-10 rounded-lg shadow-md border border-gray-300">
         @csrf
@@ -67,4 +70,6 @@
             </button>
         </div>
     </form>
+
+</body>
 @endsection
