@@ -64,9 +64,9 @@ Follow these steps to set up the project locally:
 
 4. Configure environment variables:
     - Copy .env.example to .env:
-    - cp .env.example .env
+    cp .env.example .env
 
-    - Update the .env file with your database credentials:
+5. Update the .env file with your database credentials:
     - DB_CONNECTION=mysql
     - DB_HOST=127.0.0.1
     - DB_PORT=3306
@@ -74,16 +74,16 @@ Follow these steps to set up the project locally:
     - DB_USERNAME=root
     - DB_PASSWORD=yourpassword
 
-5. Run migrations to set up the database:
+6. Run migrations to set up the database:
     php artisan migrate
 
-6. Start the development server:
+7. Start the development server:
     php artisan serve
 
-7. Start Vite to compile assets:
+8. Start Vite to compile assets:
     npm run dev
 
-8. Open your browser and visit:
+9. Open your browser and visit:
     http://127.0.0.1:8000/
     
 
