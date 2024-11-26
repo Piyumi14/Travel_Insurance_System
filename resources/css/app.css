@@ -1,3 +1,10 @@
+/* In resources/css/app.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+    .test-class {
+        background-color: red;
+    }
+}

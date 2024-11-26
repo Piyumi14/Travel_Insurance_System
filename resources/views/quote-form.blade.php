@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
+<head>
+<link href="{{ mix('css/app.css') }}" rel="stylesheet">
+</head>
+
     <h1 class="text-4xl font-bold text-center mb-10 text-black">Travel Insurance Quote</h1>
 
     <form action="{{ route('quote.store') }}" method="POST" class="max-w-3xl mx-auto bg-white p-10 rounded-lg shadow-md border border-gray-300">
@@ -8,7 +12,6 @@
 
         <!-- Form Layout -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-
             <!-- Destination -->
             <div>
                 <label for="destination" class="block text-lg font-medium text-gray-700 mb-3">Destination</label>
@@ -31,6 +34,12 @@
                 <input type="date" name="end_date" id="end_date" class="w-full p-4 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
             </div>
 
+            <!-- Number of Travelers -->
+            <div>
+                <label for="number_of_travelers" class="block text-lg font-medium text-gray-700 mb-3">Number of Travelers</label>
+                <input type="number" name="number_of_travelers" id="number_of_travelers" class="w-full p-4 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" min="1">
+            </div>
+
             <!-- Coverage Options -->
             <div class="col-span-2">
                 <label class="block text-lg font-medium text-gray-700 mb-3">Coverage Options</label>
@@ -45,19 +54,13 @@
                     </label>
                 </div>
             </div>
-
-            <!-- Number of Travelers -->
-            <div class="col-span-2">
-                <label for="number_of_travelers" class="block text-lg font-medium text-gray-700 mb-3">Number of Travelers</label>
-                <input type="number" name="number_of_travelers" id="number_of_travelers" class="w-full p-4 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" min="1">
-            </div>
         </div>
 
         <!-- Submit Buttons -->
         <div class="mt-10 flex gap-8">
-        <button type="submit" class="w-full md:w-auto bg-green-500 hover:bg-green-600 text-white py-4 px-8 rounded-lg shadow-xl transition ease-in-out duration-300">
-            Get Quote
-        </button>
+            <button type="submit" class="w-full md:w-auto bg-green-500 hover:bg-green-600 text-white py-4 px-8 rounded-lg shadow-xl transition ease-in-out duration-300">
+                Get Quote
+            </button>
 
             <button type="reset" class="w-full md:w-auto bg-gray-500 hover:bg-gray-600 text-white py-4 px-8 rounded-lg shadow-xl transition ease-in-out duration-300">
                 Reset Form
