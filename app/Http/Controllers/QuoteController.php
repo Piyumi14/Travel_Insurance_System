@@ -11,41 +11,36 @@ class QuoteController extends Controller
         return view('quote-form');
     }
 
+   
+    /**
+     * Store a newly created quote
+     * @param  \Illuminate\Http\Request  
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'destination' => 'required|in:Europe,Asia,America',
-            'start_date' => 'required|date|before_or_equal:end_date',
-            'end_date' => 'required|date|after_or_equal:start_date',
+        // Validate the request inputs
+        $request->validate([
+            'destination' => 'required',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after:start_date',
             'number_of_travelers' => 'required|integer|min:1',
-            'medical_expenses' => 'nullable|boolean',
-            'trip_cancellation' => 'nullable|boolean',
         ]);
 
-        $destinationCosts = ['Europe' => 10, 'Asia' => 20, 'America' => 30];
-        $coverageCosts = 0;
+        // Example logic for quote calculation
+        $destinationCosts = [
+            'Europe' => 10,
+            'Asia' => 20,
+            'America' => 30,
+        ];
 
-        if ($request->medical_expenses) {
-            $coverageCosts += 20;
-        }
-        if ($request->trip_cancellation) {
-            $coverageCosts += 30;
-        }
-
+        $coverageCosts = ($request->has('medical_expenses') ? 20 : 0) + ($request->has('trip_cancellation') ? 30 : 0);
         $totalPrice = $request->number_of_travelers * ($destinationCosts[$request->destination] + $coverageCosts);
 
-        // Save to the database
-        $quote = Quote::create([
-            'destination' => $request->destination,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
-            'medical_expenses' => $request->medical_expenses ?? false,
-            'trip_cancellation' => $request->trip_cancellation ?? false,
-            'number_of_travelers' => $request->number_of_travelers,
-            'total_price' => $totalPrice,
+        // Return the view with the calculated quote
+        return view('quote-form', [
+            'quote' => $totalPrice,
         ]);
-
-        return back()->with('quote', $quote->total_price);
     }
 
     public function list()

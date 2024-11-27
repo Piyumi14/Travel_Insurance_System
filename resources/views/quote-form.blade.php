@@ -10,7 +10,15 @@
 
     <h1 class="text-4xl font-bold text-center mb-10 text-white">Travel Insurance Quote</h1>
 
-    <form action="{{ route('quote.store') }}" method="POST" class="max-w-3xl mx-auto bg-white p-10 rounded-lg shadow-md border border-gray-300">
+    <!-- Show Final Quotation if Available -->
+    @if(isset($quote))
+        <div class="max-w-3xl mx-auto bg-green-100 p-5 rounded-lg shadow-md border border-green-300 text-center">
+            <h2 class="text-2xl font-semibold text-green-800">Final Quotation</h2>
+            <p class="text-xl text-green-700 mt-3">Your total quote price is: <strong>${{ $quote }}</strong></p>
+        </div>
+    @endif
+
+    <form action="{{ route('quote.store') }}" method="POST" class="max-w-3xl mx-auto bg-white p-10 rounded-lg shadow-md border border-gray-300 mt-6">
         @csrf
 
         <!-- Form Layout -->
