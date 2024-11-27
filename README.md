@@ -74,16 +74,21 @@ Follow these steps to set up the project locally:
     - DB_USERNAME=root
     - DB_PASSWORD=yourpassword
 
-6. Run migrations to set up the database:
+6. Run the following commands
+    - php artisan key:generate
+    - php artisan cache:clear
+    -php artisan config:clear
+
+8. Run migrations to set up the database:
     php artisan migrate
 
-7. Start the development server:
+9. Start the development server:
     php artisan serve
 
-8. Start Vite to compile assets:
+10. Start Vite to compile assets:
     npm run dev
 
-9. Open your browser and visit:
+11. Open your browser and visit:
     http://127.0.0.1:8000/
     
 
