@@ -27,63 +27,60 @@ class QuoteControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_calculates_the_correct_quote_price()
-    {
-        // Mock form data
-        $formData = [
-            'destination' => 'America',
-            'start_date' => '2024-12-01',
-            'end_date' => '2024-12-10',
-            'medical_expenses' => true,
-            'trip_cancellation' => true,
-            'number_of_travelers' => 2
-        ];
+    /** @test */
+public function it_calculates_the_correct_quote_price()
+{
+    $formData = [
+        'destination' => 'America',
+        'start_date' => '2024-12-01',
+        'end_date' => '2024-12-10',
+        'medical_expenses' => '1', // Checkbox value
+        'trip_cancellation' => '1', // Checkbox value
+        'number_of_travelers' => 2,
+    ];
 
-        // Calculate the expected quote price
-        $destinationCosts = ['Europe' => 10, 'Asia' => 20, 'America' => 30];
-        $coverageCosts = 20 + 30; // Medical Expenses + Trip Cancellation
-        $expectedPrice = 2 * ($destinationCosts['America'] + $coverageCosts);
+    // Expected price calculation
+    $destinationCosts = ['Europe' => 10, 'Asia' => 20, 'America' => 30];
+    $coverageCosts = 20 + 30;
+    $expectedPrice = 2 * ($destinationCosts['America'] + $coverageCosts);
 
-        // Submit the form with the mock data
-        $response = $this->post('/quote', $formData);
+    // Submit the form with the mock data
+    $response = $this->post('/quote', $formData);
 
-        // Assert that the price is correct and saved in the session
-        $response->assertSessionHas('quote');
-        $this->assertEquals($expectedPrice, session('quote'));
-    }
+    // Assert session contains the correct quote
+    $response->assertSessionHas('quote', $expectedPrice);
+}
+
 
     /** @test */
     public function it_saves_the_quote_to_the_database()
     {
-        // Mock form data
         $formData = [
             'destination' => 'Europe',
             'start_date' => '2024-12-01',
             'end_date' => '2024-12-10',
-            'medical_expenses' => true,
-            'trip_cancellation' => false,
-            'number_of_travelers' => 3
+            'medical_expenses' => '1', // Checkbox value
+            'trip_cancellation' => null, // Checkbox not selected
+            'number_of_travelers' => 3,
         ];
 
-        // Calculate the expected quote price
         $destinationCosts = ['Europe' => 10, 'Asia' => 20, 'America' => 30];
         $coverageCosts = 20; // Medical Expenses only
         $expectedPrice = 3 * ($destinationCosts['Europe'] + $coverageCosts);
 
-        // Submit the form with the mock data
         $this->post('/quote', $formData);
 
-        // Assert that the quote is saved in the database
         $this->assertDatabaseHas('quotes', [
             'destination' => 'Europe',
             'start_date' => '2024-12-01',
             'end_date' => '2024-12-10',
-            'medical_expenses' => true,
-            'trip_cancellation' => false,
+            'medical_expenses' => 1,
+            'trip_cancellation' => 0,
             'number_of_travelers' => 3,
-            'total_price' => $expectedPrice
+            'total_price' => $expectedPrice,
         ]);
     }
+
 
     /** @test */
     public function it_rejects_invalid_destination()
@@ -101,21 +98,22 @@ class QuoteControllerTest extends TestCase
         $response->assertSessionHasErrors(['destination']);
     }
 
-    /** @test */
+   /** @test */
     public function it_rejects_invalid_date_ranges()
     {
         $formData = [
             'destination' => 'America',
-            'start_date' => '2024-12-10',
-            'end_date' => '2024-12-01', // Invalid range
-            'number_of_travelers' => 2
+            'start_date' => '2024-12-10', // Start date after end date
+            'end_date' => '2024-12-01',   // Invalid date range
+            'number_of_travelers' => 2,
         ];
 
         $response = $this->post('/quote', $formData);
 
-        // Assert that the start_date field has an error
-        $response->assertSessionHasErrors(['start_date']);
+        // Assert that the validation fails for the start_date or end_date field
+        $response->assertSessionHasErrors(['end_date']); // end_date must be after start_date
     }
+
 
     /** @test */
     public function it_requires_valid_number_of_travelers()

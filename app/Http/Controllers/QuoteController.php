@@ -21,28 +21,40 @@ class QuoteController extends Controller
     {
         // Validate the request inputs
         $request->validate([
-            'destination' => 'required',
+            'destination' => 'required|in:Europe,Asia,America',
             'start_date' => 'required|date',
-            'end_date' => 'required|date|after:start_date',
+            'end_date' => 'required|date|after:start_date', // Ensures end_date is after start_date
             'number_of_travelers' => 'required|integer|min:1',
         ]);
-
-        // Example logic for quote calculation
+    
+        // Quote calculation
         $destinationCosts = [
             'Europe' => 10,
             'Asia' => 20,
             'America' => 30,
         ];
-
-        $coverageCosts = ($request->has('medical_expenses') ? 20 : 0) + ($request->has('trip_cancellation') ? 30 : 0);
+    
+        $coverageCosts = ($request->medical_expenses ? 20 : 0) + ($request->trip_cancellation ? 30 : 0);
         $totalPrice = $request->number_of_travelers * ($destinationCosts[$request->destination] + $coverageCosts);
-
-        // Return the view with the calculated quote
-        return view('quote-form', [
-            'quote' => $totalPrice,
+    
+        // Save the quote to the session
+        session(['quote' => $totalPrice]);
+    
+        // Save to database
+        Quote::create([
+            'destination' => $request->destination,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'medical_expenses' => $request->medical_expenses ? 1 : 0,
+            'trip_cancellation' => $request->trip_cancellation ? 1 : 0,
+            'number_of_travelers' => $request->number_of_travelers,
+            'total_price' => $totalPrice,
         ]);
+    
+        // Return the view with the calculated quote
+        return view('quote-form', ['quote' => $totalPrice]);
     }
-
+    
     public function list()
     {
         $quotes = Quote::all();
