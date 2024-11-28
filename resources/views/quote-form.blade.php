@@ -8,7 +8,7 @@
 <!-- Add the correct background image properties to prevent tiling -->
 <body class="bg-gray-100 bg-cover bg-no-repeat bg-center min-h-screen" style="background-image: url('{{ asset('images/image1.jpg') }}')">
 
-    <h1 class="text-4xl font-bold text-center mb-10 text-white">Travel Insurance Quote</h1>
+    <h1 class="text-4xl font-bold text-center mb-10 text-white">~ Travel Insurance Quote ~</h1>
 
     <!-- Show Final Quotation if Available -->
     @if(isset($quote))
